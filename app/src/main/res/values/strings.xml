@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">EstateAgency</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_deal">Add deal</string>
+    <string name="client">Client</string>
+    <string name="realtor">Realtor</string>
+    <string name="deal_date">Deal date</string>
+    <string name="add">add</string>
+    <string name="change_deal">Change deal</string>
+    <string name="change">Change</string>
+</resources>
