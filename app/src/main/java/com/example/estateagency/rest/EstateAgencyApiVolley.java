@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.estateagency.MainActivity;
 import com.example.estateagency.domain.Deal;
 import com.example.estateagency.domain.enums.DealEnum;
 import com.example.estateagency.domain.enums.RealtyEnum;
@@ -62,6 +63,8 @@ public class EstateAgencyApiVolley implements EstateAgencyApi {
                                 Deal deal = DealMapper.dealFromJson(jsonObject); //todo
                                 NoDb.DEAL_LIST.add(deal);
                             }
+
+                            ((MainActivity)context).updateAdapter();
                             Log.d(API_TEST, NoDb.DEAL_LIST.toString());
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
