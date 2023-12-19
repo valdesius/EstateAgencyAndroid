@@ -1,21 +1,25 @@
 package com.example.estateagency.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.estateagency.R;
 import com.example.estateagency.domain.Deal;
+import com.example.estateagency.fragment.ChangeDealFragment;
 import com.example.estateagency.nodb.NoDb;
 
 import java.util.List;
 
 public class DealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static final String DEAL_KEY = "Deal";
     private final Context context;
     private final LayoutInflater inflater;
     private final List<Deal> dealList;
@@ -51,6 +55,23 @@ public class DealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ((MyHolder) holder).tvDate.setText(deal.getDate().toString());
         ((MyHolder) holder).tvClient.setText(deal.getClient().getName());
         ((MyHolder) holder).tvRealtor.setText(deal.getRealtor().getName());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChangeDealFragment changeDealFragment = new ChangeDealFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(DEAL_KEY, deal);
+
+                changeDealFragment.setArguments(bundle);
+
+                ((AppCompatActivity) context).getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.fl_main, changeDealFragment)
+                        .commit();
+            }
+        });
     }
 
     @Override

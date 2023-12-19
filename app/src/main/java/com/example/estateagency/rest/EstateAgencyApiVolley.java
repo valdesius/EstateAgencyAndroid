@@ -64,7 +64,7 @@ public class EstateAgencyApiVolley implements EstateAgencyApi {
                                 NoDb.DEAL_LIST.add(deal);
                             }
 
-                            ((MainActivity)context).updateAdapter();
+                            ((MainActivity) context).updateAdapter();
                             Log.d(API_TEST, NoDb.DEAL_LIST.toString());
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
@@ -142,6 +142,20 @@ public class EstateAgencyApiVolley implements EstateAgencyApi {
 
     @Override
     public void deleteDeal(int id) {
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
 
+        String url = BASE_URL + "/deal" + "/" + id;
+
+        StringRequest request = new StringRequest(
+                Request.Method.DELETE, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                fillDeal();
+                Log.d(API_TEST, response);
+            }
+        },
+                errorListener
+        );
+        requestQueue.add(request);
     }
 }

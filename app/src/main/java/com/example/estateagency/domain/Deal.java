@@ -2,9 +2,10 @@ package com.example.estateagency.domain;
 
 import com.example.estateagency.domain.enums.DealEnum;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Deal {
+public class Deal implements Serializable {
 
     private int id;
 
