@@ -15,10 +15,16 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.estateagency.MainActivity;
+import com.example.estateagency.domain.Client;
 import com.example.estateagency.domain.Deal;
+import com.example.estateagency.domain.Realtor;
+import com.example.estateagency.domain.Realty;
 import com.example.estateagency.domain.enums.DealEnum;
 import com.example.estateagency.domain.enums.RealtyEnum;
+import com.example.estateagency.domain.mapper.ClientMapper;
 import com.example.estateagency.domain.mapper.DealMapper;
+import com.example.estateagency.domain.mapper.RealtorMapper;
+import com.example.estateagency.domain.mapper.RealtyMapper;
 import com.example.estateagency.nodb.NoDb;
 
 import org.json.JSONArray;
@@ -81,17 +87,113 @@ public class EstateAgencyApiVolley implements EstateAgencyApi {
 
     @Override
     public void fillClient() {
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+
+        String url = BASE_URL + "/client";
+
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        NoDb.CLIENT_LIST.clear();
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                Client client = ClientMapper.clientFromJson(jsonObject);
+                                NoDb.CLIENT_LIST.add(client);
+                            }
+
+                            ((MainActivity) context).updateAdapter();
+                            Log.d(API_TEST, NoDb.CLIENT_LIST.toString());
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
+                errorListener
+
+        );
+
+        requestQueue.add(arrayRequest);
+
+
 
     }
 
     @Override
     public void fillRealtor() {
 
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+
+        String url = BASE_URL + "/realtor";
+
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        NoDb.REALTOR_LIST.clear();
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                Realtor realtor = RealtorMapper.realtorFromJson(jsonObject);
+                                NoDb.REALTOR_LIST.add(realtor);
+                            }
+
+                            ((MainActivity) context).updateAdapter();
+                            Log.d(API_TEST, NoDb.REALTOR_LIST.toString());
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
+                errorListener
+
+        );
+
+        requestQueue.add(arrayRequest);
+
     }
 
     @Override
     public void fillRealty() {
 
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+
+        String url = BASE_URL + "/realty";
+
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        NoDb.REALTY_LIST.clear();
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                Realty realty = RealtyMapper.realtyFromJson(jsonObject);
+                                NoDb.REALTY_LIST.add(realty);
+                            }
+
+                            ((MainActivity) context).updateAdapter();
+                            Log.d(API_TEST, NoDb.REALTY_LIST.toString());
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
+                errorListener
+
+        );
+
+        requestQueue.add(arrayRequest);
     }
 
     @Override

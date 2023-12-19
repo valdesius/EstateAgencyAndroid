@@ -2,16 +2,19 @@ package com.example.estateagency;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.estateagency.adapter.DealAdapter;
 import com.example.estateagency.domain.Deal;
+import com.example.estateagency.fragment.AddDealFragment;
 import com.example.estateagency.nodb.NoDb;
 import com.example.estateagency.rest.EstateAgencyApiVolley;
 
@@ -24,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     private EstateAgencyApiVolley estateAgencyApiVolley;
 
+    private AppCompatButton btnAdd;
+
     private ItemTouchHelper.SimpleCallback simpleCallback;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -31,9 +36,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        btnAdd = findViewById(R.id.btn_add);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddDealFragment addDealFragment = new AddDealFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.fl_main, addDealFragment)
+                        .commit();
+            }
+        });
 
         estateAgencyApiVolley = new EstateAgencyApiVolley(this);
         estateAgencyApiVolley.fillDeal();
+        estateAgencyApiVolley.fillClient();
+        estateAgencyApiVolley.fillRealtor();
+        estateAgencyApiVolley.fillRealty();
 
         rvDeal = findViewById(R.id.rv_deal);
         dealAdapter = new DealAdapter(this, NoDb.DEAL_LIST);
