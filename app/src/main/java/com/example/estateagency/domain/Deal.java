@@ -36,6 +36,30 @@ public class Deal {
     }
 
 
+    public int getId() {
+        return id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public DealEnum getType() {
+        return type;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public Realtor getRealtor() {
+        return realtor;
+    }
+
+    public Realty getRealty() {
+        return realty;
+    }
+
     @Override
     public String toString() {
         return "Deal{" +

@@ -9,6 +9,7 @@ import java.time.LocalDate;
 public interface EstateAgencyApi {
 
     void fillDeal();
+
     void fillClient();
 
     void fillRealtor();
@@ -17,17 +18,20 @@ public interface EstateAgencyApi {
 
     void addDeal(Deal deal);
 
-    void updateDeal(int id,
-                    LocalDate date,
-                    DealEnum type,
-                    String clientName,
-                    String clientPhone,
-                    String clientEmail,
-                    String realtorName,
-                    String realtorPhone,
-                    String realtorEmail,
-                    String realtyAddress,
-                    RealtyEnum realtyType,
-                    int area,
-                    int price);
+    void updateDeal(
+            int id,
+            LocalDate date,
+            DealEnum type,
+            String clientName,
+            String clientPhone,
+            String clientEmail,
+            String realtorName,
+            String realtorPhone,
+            String realtorEmail,
+            String realtyAddress,
+            RealtyEnum realtyType,
+            int area,
+            int price);
+
+    void deleteDeal(int id);
 }
